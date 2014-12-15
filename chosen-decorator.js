@@ -39,7 +39,6 @@
                 display_disabled_options: this.display_disabled_options,
                 display_selected_options: this.display_selected_options
             };
-            console.log(options);
 
             $(select).chosen(options);
         }
