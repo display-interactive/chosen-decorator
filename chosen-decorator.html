@@ -1,0 +1,14 @@
+<link rel="import" href="../polymer/polymer.html">
+<script src="../jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="../chosen/chosen.min.css">
+<script src="../chosen/chosen.jquery.min.js"></script>
+<script src="chosen-decorator.js"></script>
+
+<polymer-element name="chosen-decorator" attributes="allow_single_deselect disable_search disable_search_threshold enable_split_word_search inherit_select_classes max_selected_options no_results_text placeholder_text_multiple placeholder_text_single search_contains single_backstroke_delete width display_disabled_options display_selected_options">
+    <template>
+        <content></content>
+    </template>
+    <script>
+        Polymer('chosen-decorator', chosenDecorator);
+    </script>
+</polymer-element>
