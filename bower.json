@@ -15,7 +15,7 @@
     ],
     "keywords": ["Polymer", "web-components", "chosen", "html", "select", "selectbox"],
     "dependencies": {
-        "polymer": "Polymer/polymer#~0.5.4",
+        "polymer": "Polymer/polymer#master",
         "jquery": "latest",
         "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.2.0/chosen_v1.2.0.zip"
     },
