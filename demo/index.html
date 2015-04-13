@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <meta charset="utf-8">
     <title>chosen demo</title>
-    <script src="../webcomponentsjs/webcomponents.js"></script>
-    <link rel="import" href="chosen-decorator.html">
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../chosen-decorator.html">
     <style>
         #container {
             padding-top: 15%;
@@ -22,7 +22,7 @@
     <h1><code>Chosen with polymer</code> in action:</h1>
     <form method="GET">
         <p>
-            <chosen-decorator width="300" allow_single_deselect="true">
+            <chosen-decorator width="300" allowSingleDeselect="true">
                 <select name="bla">
                     <option value=""></option>
                     <option value="1">1 test</option>
@@ -33,5 +33,10 @@
         </p>
     </form>
 </div>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        document.body.removeAttribute('unresolved');
+    }, false);
+</script>
 </body>
 </html>

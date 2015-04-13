@@ -2,13 +2,110 @@
 <script src="../jquery/dist/jquery.min.js"></script>
 <link rel="stylesheet" href="../chosen/chosen.min.css">
 <script src="../chosen/chosen.jquery.min.js"></script>
-<script src="chosen-decorator.js"></script>
 
-<polymer-element name="chosen-decorator" attributes="allow_single_deselect disable_search disable_search_threshold enable_split_word_search inherit_select_classes max_selected_options no_results_text placeholder_text_multiple placeholder_text_single search_contains single_backstroke_delete width display_disabled_options display_selected_options">
+<dom-module id="chosen-decorator">
+    <style>
+        chosen-decorator {
+            opacity: 1;
+            transition: opacity 300ms;
+        }
+
+        chosen-decorator[unresolved] {
+            opacity: 0;
+        }
+    </style>
     <template>
+
         <content></content>
     </template>
-    <script>
-        Polymer('chosen-decorator', chosenDecorator);
-    </script>
-</polymer-element>
+</dom-module>
+<script>
+    Polymer({
+        is: 'chosen-decorator',
+
+        /** @see http://harvesthq.github.io/chosen/options.html */
+        properties: {
+            allowSingleDeselect: {
+                type: 'Boolean',
+                value: false
+            },
+            disableSearch: {
+                type: 'Boolean',
+                value: false
+            },
+            disableSearchThreshold: {
+                type: 'Number',
+                value: 0
+            },
+            enableSplitWordSearch: {
+                type: 'Boolean',
+                value: true
+            },
+            inheritSelectClasses: {
+                type: 'Boolean',
+                value: false
+            },
+            maxSelectedOptions: {
+                type: 'Number',
+                value: Infinity
+            },
+            noResultsText: {
+                type: 'String',
+                value: "No results match"
+            },
+            placeholderTextMultiple: {
+                type: 'String',
+                value: "Select Some Options"
+            },
+            placeholderTextSingle: {
+                type: 'String',
+                value: "Select an Option"
+            },
+            searchContains: {
+                type: 'Boolean',
+                value: false
+            },
+            singleBackstrokeDelete: {
+                type: 'Boolean',
+                value: true
+            },
+            width: {
+                type: 'Number',
+                value: undefined
+            },
+            displayDisabledOptions: {
+                type: 'Boolean',
+                value: true
+            },
+            displaySelectedOptions: {
+                type: 'Boolean',
+                value: true
+            }
+        },
+
+        /**
+         * Constructor
+         */
+        ready: function() {
+            var select = this.querySelector('select');
+            var options = {
+                allow_single_deselect: this.allowSingleDeselect,
+                disable_search: this.disableSearch,
+                disable_search_threshold: this.disableSearchThreshold,
+                enable_split_word_search: this.enableSplitWordSearch,
+                inherit_select_classes: this.inheritSelectClasses,
+                max_selected_options: this.maxSelectedOptions,
+                no_results_text: this.noResultsText,
+                placeholder_text_multiple: this.placeholderTextMultiple,
+                placeholder_text_single: this.placeholderTextSingle,
+                search_contains: this.searchContains,
+                single_backstroke_delete: this.singleBackstrokeDelete,
+                width: (undefined != this.width ? this.width+'px': undefined),
+                display_disabled_options: this.displayDisabledOptions,
+                display_selected_options: this.displaySelectedOptions
+            };
+
+            jQuery(select).chosen(options);
+        }
+    });
+</script>

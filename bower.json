@@ -1,6 +1,6 @@
 {
     "name": "chosen-decorator",
-    "version": "0.0.1",
+    "version": "0.2",
     "authors": [
         "Florian Roy"
     ],
@@ -15,9 +15,9 @@
     ],
     "keywords": ["Polymer", "web-components", "chosen", "html", "select", "selectbox"],
     "dependencies": {
-        "polymer": "Polymer/polymer#^0.5",
+        "polymer": "Polymer/polymer#^0.8.0-rc.2",
         "jquery": "latest",
-        "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip"
+        "chosen": "latest"
     },
     "devDependencies": {
         "web-component-tester": "*"
