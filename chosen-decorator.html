@@ -88,6 +88,7 @@
          */
         ready: function() {
             var select = this.querySelector('select');
+            
             var options = {
                 allow_single_deselect: this.allowSingleDeselect,
                 disable_search: this.disableSearch,
@@ -100,7 +101,7 @@
                 placeholder_text_single: this.placeholderTextSingle,
                 search_contains: this.searchContains,
                 single_backstroke_delete: this.singleBackstrokeDelete,
-                width: (undefined != this.width ? this.width+'px': undefined),
+                width: undefined != this.width ? this.width+'px': undefined,
                 display_disabled_options: this.displayDisabledOptions,
                 display_selected_options: this.displaySelectedOptions
             };
