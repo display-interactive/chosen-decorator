@@ -87,7 +87,7 @@
          * Constructor
          */
         ready: function() {
-            var select = this.querySelector('select');
+            var select = Polymer.dom(this).querySelector('select');
 
             var options = {
                 allow_single_deselect: this.allowSingleDeselect,
