@@ -4,18 +4,7 @@
 <script src="../chosen/chosen.jquery.min.js"></script>
 
 <dom-module id="chosen-decorator">
-    <style>
-        chosen-decorator {
-            opacity: 1;
-            transition: opacity 300ms;
-        }
-
-        chosen-decorator[unresolved] {
-            opacity: 0;
-        }
-    </style>
     <template>
-
         <content></content>
     </template>
 </dom-module>
@@ -26,59 +15,59 @@
         /** @see http://harvesthq.github.io/chosen/options.html */
         properties: {
             allowSingleDeselect: {
-                type: 'Boolean',
+                type: Boolean,
                 value: false
             },
             disableSearch: {
-                type: 'Boolean',
+                type: Boolean,
                 value: false
             },
             disableSearchThreshold: {
-                type: 'Number',
+                type: Number,
                 value: 0
             },
             enableSplitWordSearch: {
-                type: 'Boolean',
+                type: Boolean,
                 value: true
             },
             inheritSelectClasses: {
-                type: 'Boolean',
+                type: Boolean,
                 value: false
             },
             maxSelectedOptions: {
-                type: 'Number',
+                type: Number,
                 value: Infinity
             },
             noResultsText: {
-                type: 'String',
+                type: String,
                 value: "No results match"
             },
             placeholderTextMultiple: {
-                type: 'String',
+                type: String,
                 value: "Select Some Options"
             },
             placeholderTextSingle: {
-                type: 'String',
+                type: String,
                 value: "Select an Option"
             },
             searchContains: {
-                type: 'Boolean',
+                type: Boolean,
                 value: false
             },
             singleBackstrokeDelete: {
-                type: 'Boolean',
+                type: Boolean,
                 value: true
             },
             width: {
-                type: 'Number',
+                type: Number,
                 value: undefined
             },
             displayDisabledOptions: {
-                type: 'Boolean',
+                type: Boolean,
                 value: true
             },
             displaySelectedOptions: {
-                type: 'Boolean',
+                type: Boolean,
                 value: true
             }
         },
