@@ -40,7 +40,7 @@
                 display_selected_options: this.display_selected_options
             };
 
-            $(select).chosen(options);
+            this.chosen = $(select).chosen(options);
         }
     }
 }(jQuery));
