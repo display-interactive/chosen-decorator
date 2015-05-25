@@ -40,7 +40,8 @@
                 display_selected_options: this.display_selected_options
             };
 
-            this.chosen = $(select).chosen(options);
+            this.element = $(select);
+            this.element.chosen(options);
         }
     }
 }(jQuery));
