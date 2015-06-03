@@ -4,12 +4,11 @@
     },
     "description": "Chosen decorator with polymer",
     "devDependencies": {
-        "web-component-tester": "~2.2.6"
+        "web-component-tester": "3.1.3"
     },
     "name": "chosen-decorator",
     "repository": {
         "type": "git",
         "url": "https://github.com/display-interactive/chosen-decorator.git"
-    },
-    "version": "0.2"
+    }
 }
