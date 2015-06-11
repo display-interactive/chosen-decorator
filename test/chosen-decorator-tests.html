@@ -16,7 +16,7 @@
 <body>
 
 <p>
-    <chosen-decorator id="typicalChosen">
+    <chosen-decorator width="300" id="typicalChosen">
         <select>
             <option>1 test</option>
             <option>2 test 2</option>
@@ -27,15 +27,35 @@
 
 <script>
     suite('<chosen-decorator>', function() {
+        var el = document.getElementById('typicalChosen');
         test('exists', function() {
-            assert.isNotNull(document.getElementById('typicalChosen'));
+            assert.isNotNull(el);
         });
 
         test('chosen instantiated', function() {
             assert.equal(1, document.querySelectorAll('.chosen-container').length);
         });
 
+        test('test dynamic insert', function() {
+            var markup = '<chosen-decorator width="300" id="test">' +
+                    '<select>' +
+                    '<option>1 test</option>' +
+                    '<option>2 test 2</option>' +
+                    '<option>3 3 test</option>' +
+                    '</select>' +
+                    '</chosen-decorator>';
+
+            var div = document.createElement('div');
+            div.innerHTML = markup;
+
+            var fc = div.firstChild;
+            el.parentNode.insertBefore(fc, el);
+
+            assert.equal(1, fc.querySelectorAll('.chosen-container').length);
+        });
+
         //todo: test that options are working
+
     });
 </script>
 
