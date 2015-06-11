@@ -71,7 +71,7 @@
             }
         },
 
-        element: null,
+        chosen: null,
 
         /**
          * Constructor
@@ -96,8 +96,8 @@
                 display_selected_options: this.displaySelectedOptions
             };
 
-            this.element = jQuery(select);
-            this.element.chosen(options);
+            this.chosen = jQuery(select);
+            this.chosen.chosen(options);
         }
     });
 </script>
