@@ -98,6 +98,10 @@
 
             this.chosen = jQuery(select);
             this.chosen.chosen(options);
+
+            this.chosen.on('change', function() {
+                this.fire('change', true);
+            }.bind(this));
         }
     });
 </script>
