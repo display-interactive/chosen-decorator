@@ -36,7 +36,7 @@
             assert.equal(1, document.querySelectorAll('.chosen-container').length);
         });
 
-        test('test dynamic insert', function() {
+        test('test dynamic insert', function(done) {
             var markup = '<chosen-decorator width="300" id="test">' +
                     '<select>' +
                     '<option>1 test</option>' +
@@ -51,7 +51,10 @@
             var fc = div.firstChild;
             el.parentNode.insertBefore(fc, el);
 
-            assert.equal(1, fc.querySelectorAll('.chosen-container').length);
+            setTimeout(function() {
+                assert.equal(1, fc.querySelectorAll('.chosen-container').length);
+                done();
+            }, 10);
         });
 
         //todo: test that options are working
