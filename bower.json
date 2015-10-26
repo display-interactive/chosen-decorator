@@ -17,6 +17,7 @@
     "dependencies": {
         "polymer": "Polymer/polymer#^1.1.*",
         "ugo-jquery-deps": "https://github.com/display-interactive/ugo-jquery-deps.git",
+        "iron-ajax": "PolymerElements/iron-ajax",
         "chosen": "latest"
     },
     "devDependencies": {

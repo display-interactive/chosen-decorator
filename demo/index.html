@@ -21,8 +21,12 @@
 <div id="container">
     <h1><code>Chosen with polymer</code> in action:</h1>
     <form method="GET">
+        <select id="parent-deps">
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
         <p>
-            <chosen-decorator width="300" allow-single-deselect="true">
+            <chosen-decorator width="300" allow-single-deselect="true" depending="#parent-deps" depending-url="http://localhost/webcompo/chosen-decorator/test/test.json">
                 <select name="bla">
                     <option value=""></option>
                     <option value="1">1 test</option>

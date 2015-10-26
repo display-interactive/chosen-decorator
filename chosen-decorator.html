@@ -1,9 +1,16 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="stylesheet" href="../chosen/chosen.min.css">
 <link rel="import" href="chosen.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 
 <dom-module id="chosen-decorator">
     <template>
+        <iron-ajax id="ajaxHandler"
+                   url="{{ dependingUrl }}"
+                   params="{{ dependingParams }}"
+                   handle-as="{{ handleAs }}"
+                   on-response="handleAjaxResponse">
+        </iron-ajax>
         <content></content>
     </template>
 </dom-module>
@@ -68,6 +75,43 @@
             displaySelectedOptions: {
                 type: Boolean,
                 value: true
+            },
+
+            /**
+             * a selector to bind the dependency
+             */
+            depending: {
+                type: String,
+                value: null,
+                observer: "initializeDependency"
+            },
+
+            /**
+             * To perform the select data
+             */
+            dependingUrl: {
+                type: String,
+                value: null,
+                observer: "initializeDependency"
+            },
+
+            dependingParams: {
+                type: Object,
+                value: {}
+            },
+
+            handleAs: {
+                type: String,
+                value: 'json'
+            },
+
+            /**
+             * Event to fire request ajax and change the select options
+             */
+            dependingEvents: {
+                type: String,
+                value: "change",
+                observer: "initializeDependency"
             }
         },
 
@@ -78,8 +122,69 @@
          */
         ready: function() {
             var select = Polymer.dom(this).querySelector('select');
+            this.chosen = jQuery(select);
+            this.chosen.chosen(this._getOptions());
 
-            var options = {
+            this.chosen.on('change', function() {
+                this.fire('change', true);
+            }.bind(this));
+        },
+
+        /**
+         * Init dependency options
+         */
+        initializeDependency: function() {
+            //handle depending options
+            if (null !== this.depending) {
+                var el = document.querySelector(this.depending);
+                var events = this._getDependingEvents();
+                if (el && events) {
+                    for (var i = 0; i < events.length; i++) {
+                        el.addEventListener(events[i], this.handleDependingEvent.bind(this));
+                    }
+                }
+            }
+        },
+
+        /**
+         * Performs request
+         */
+        handleDependingEvent: function(e) {
+            this.dependingParams = {"value": e.target.value};
+            this.$.ajaxHandler.generateRequest();
+        },
+
+        /**
+         * Handle ajax response
+         */
+        handleAjaxResponse: function(event, ironRequest) {
+            var htmlOptions = this._buildSelectOptions(ironRequest.parseResponse());
+            this.chosen.chosen('destroy');
+            this.chosen[0].innerHTML = htmlOptions;
+            this.chosen.chosen(this._getOptions());
+        },
+
+        /**
+         * @return {String}
+         */
+        _buildSelectOptions: function(data) {
+            var html = '';
+            for (var i = 0; i < data.length; i++) {
+                var value = data[i].value,
+                    label = data[i].label != undefined ? data[i].label : value;
+
+                html += '<option value="'+value+'">'+label+'</option>'
+            }
+
+            return html;
+        },
+
+        /**
+         * @returns {*}
+         * @private
+         */
+        _getOptions: function() {
+            return {
                 allow_single_deselect: this.allowSingleDeselect,
                 disable_search: this.disableSearch,
                 disable_search_threshold: this.disableSearchThreshold,
@@ -95,13 +200,17 @@
                 display_disabled_options: this.displayDisabledOptions,
                 display_selected_options: this.displaySelectedOptions
             };
+        },
 
-            this.chosen = jQuery(select);
-            this.chosen.chosen(options);
+        /**
+         *
+         * @returns {Array}
+         * @private
+         */
+        _getDependingEvents: function() {
+            if (undefined == this.dependingEvents) return null;
 
-            this.chosen.on('change', function() {
-                this.fire('change', true);
-            }.bind(this));
+            return this.dependingEvents.split(' ');
         }
     });
 </script>

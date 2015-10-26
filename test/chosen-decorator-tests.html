@@ -25,6 +25,21 @@
     </chosen-decorator>
 </p>
 
+<p>
+    <select id="deps">
+        <option value="1">1</option>
+        <option value="2">2</option>
+    </select>
+
+    <chosen-decorator width="300" id="typicalChosen2" depending="#deps" depending-url="test.json">
+        <select>
+            <option>1 test</option>
+            <option>2 test 2</option>
+            <option>3 3 test</option>
+        </select>
+    </chosen-decorator>
+</p>
+
 <script>
     suite('<chosen-decorator>', function() {
         var el = document.getElementById('typicalChosen');
@@ -33,7 +48,7 @@
         });
 
         test('chosen instantiated', function() {
-            assert.equal(1, document.querySelectorAll('.chosen-container').length);
+            assert.equal(2, document.querySelectorAll('.chosen-container').length);
         });
 
         test('test dynamic insert', function(done) {
@@ -58,6 +73,32 @@
         });
 
         //todo: test that options are working
+
+        var _triggerEvent = function(element, eventName) {
+            var event; // The custom event that will be created
+            if (document.createEvent) {
+                event = document.createEvent("HTMLEvents");
+                event.initEvent(eventName, true, true);
+            } else {
+                event = document.createEventObject();
+                event.eventType = eventName;
+            }
+            event.eventName = eventName;
+            if (document.createEvent) {
+                element.dispatchEvent(event);
+            } else {
+                element.fireEvent("on" + event.eventType, event);
+            }
+        };
+
+        test('depending', function() {
+            var dep = document.querySelector('#deps');
+            dep.options[1].setAttribute('selected', 'selected');
+
+            _triggerEvent(dep, 'change');
+            var el = document.querySelector('#typicalChosen2');
+            assert.equal(3, el.chosen[0].options.length);
+        });
 
     });
 </script>
