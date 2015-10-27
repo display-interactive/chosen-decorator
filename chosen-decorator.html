@@ -121,13 +121,10 @@
          * Constructor
          */
         ready: function() {
-            var select = Polymer.dom(this).querySelector('select');
+            var select = this._getSelect(this);
             this.chosen = jQuery(select);
-            this.chosen.chosen(this._getOptions());
 
-            this.chosen.on('change', function() {
-                this.fire('change', true);
-            }.bind(this));
+            this._initializeChosen();
         },
 
         /**
@@ -150,7 +147,12 @@
          * Performs request
          */
         handleDependingEvent: function(e) {
-            this.dependingParams = {"value": e.target.value};
+            var select = e.target;
+            if ('CHOSEN-DECORATOR' === select.tagName) {
+                select = this._getSelect(e.target);
+            }
+
+            this.dependingParams = {"value": select.options[select.selectedIndex].value};
             this.$.ajaxHandler.generateRequest();
         },
 
@@ -161,7 +163,7 @@
             var htmlOptions = this._buildSelectOptions(ironRequest.parseResponse());
             this.chosen.chosen('destroy');
             this.chosen[0].innerHTML = htmlOptions;
-            this.chosen.chosen(this._getOptions());
+            this._initializeChosen();
         },
 
         /**
@@ -200,6 +202,22 @@
                 display_disabled_options: this.displayDisabledOptions,
                 display_selected_options: this.displaySelectedOptions
             };
+        },
+
+        _initializeChosen: function() {
+            this.chosen.chosen(this._getOptions());
+
+            this.chosen.on('change', function() {
+                this.fire('change', true);
+            }.bind(this));
+        },
+
+        /**
+         * get select element in the given node
+         * @return {HTMLSelectElement}
+         */
+        _getSelect: function (element) {
+            return Polymer.dom(element).querySelector('select');
         },
 
         /**
