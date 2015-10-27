@@ -83,7 +83,7 @@
             depending: {
                 type: String,
                 value: null,
-                observer: "initializeDependency"
+                observer: "changeDepending"
             },
 
             /**
@@ -91,8 +91,7 @@
              */
             dependingUrl: {
                 type: String,
-                value: null,
-                observer: "initializeDependency"
+                value: null
             },
 
             dependingParams: {
@@ -111,7 +110,7 @@
             dependingEvents: {
                 type: String,
                 value: "change",
-                observer: "initializeDependency"
+                observer: "changeDependingEvents"
             }
         },
 
@@ -125,22 +124,55 @@
             this.chosen = jQuery(select);
 
             this._initializeChosen();
+            this._initializeDependency();
         },
 
         /**
          * Init dependency options
+         * @private
          */
-        initializeDependency: function() {
+        _initializeDependency: function() {
             //handle depending options
             if (null !== this.depending) {
                 var el = document.querySelector(this.depending);
                 var events = this._getDependingEvents();
                 if (el && events) {
+                    var handler = this.handleDependingEvent.bind(this);
                     for (var i = 0; i < events.length; i++) {
-                        el.addEventListener(events[i], this.handleDependingEvent.bind(this));
+                        el.addEventListener(events[i], handler);
                     }
                 }
             }
+        },
+
+        changeDepending: function(newSelector, oldSelector) {
+            if (undefined != oldSelector) {
+                this._resetDependency(oldSelector, this.dependingEvents);
+            }
+        },
+
+        /**
+         * @private
+         */
+        changeDependingEvents: function(newEvents, oldEvents) {
+            if (undefined != oldEvents) {
+                this._resetDependency(this.depending, oldEvents);
+            }
+        },
+
+        /**
+         * Reset old registered events
+         */
+        _resetDependency: function(selector, events) {
+            var el = document.querySelector(selector);
+            var oldEvents = events.split(' ');
+            if (el && oldEvents) {
+                var handler = this.handleDependingEvent.bind(this);
+                for (var i = 0; i < oldEvents.length; i++) {
+                    el.removeEventListener(oldEvents[i], handler);
+                }
+            }
+            this._initializeDependency();
         },
 
         /**
@@ -175,7 +207,7 @@
                 var value = data[i].value,
                     label = data[i].label != undefined ? data[i].label : value;
 
-                html += '<option value="'+value+'">'+label+'</option>'
+                html += '<option value="'+value+'">'+label+'</option>';
             }
 
             return html;

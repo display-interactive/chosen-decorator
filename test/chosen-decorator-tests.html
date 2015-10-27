@@ -40,6 +40,8 @@
     </chosen-decorator>
 </p>
 
+<p id="append"></p>
+
 <script>
     suite('<chosen-decorator>', function() {
         var el = document.getElementById('typicalChosen');
@@ -100,6 +102,14 @@
             assert.equal(3, el.chosen[0].options.length);
         });
 
+        test('dynamic insert', function() {
+            var html = '<select id="deps2"><option value="1">1</option><option value="2">2</option></select><chosen-decorator width="300" id="typicalChosen3" depending="#deps2" depending-url="test.json"><select><option>1 test</option><option>2 test 2</option><option>3 3 test</option></select></chosen-decorator>';
+
+            var ctn = document.querySelector('#append');
+            ctn.innerHTML = html;
+
+            document.querySelector('#typicalChosen3').setAttribute('depending-url', 'test2.json');
+        });
     });
 </script>
 
