@@ -124,7 +124,7 @@
             this.chosen = jQuery(select);
 
             this._initializeChosen();
-            this._initializeDependency();
+            this.async(this._initializeDependency.bind(this), 10);
         },
 
         /**
