@@ -125,6 +125,26 @@
 
             this._initializeChosen();
             this.async(this._initializeDependency.bind(this), 10);
+            this._onMutation();
+        },
+
+        /**
+         * When removing element
+         */
+        detached: function() {
+            //disconnect observer
+            if (this.mutationObserver) this.mutationObserver.disconnect();
+        },
+
+        _onMutation: function() {
+            if (typeof window.MutationObserver == 'function') {
+                this.mutationObserver = new MutationObserver(function(mutations) {
+                    this.chosen.chosen('destroy');
+                    this._initializeChosen();
+                }.bind(this));
+
+                this.mutationObserver.observe(this.chosen[0], {attributes: false, childList: true, characterData: false});
+            }
         },
 
         /**
@@ -193,9 +213,9 @@
          */
         handleAjaxResponse: function(event, ironRequest) {
             var htmlOptions = this._buildSelectOptions(ironRequest.parseResponse());
-            this.chosen.chosen('destroy');
+            if (!this.mutationObserver) this.chosen.chosen('destroy');
             this.chosen[0].innerHTML = htmlOptions;
-            this._initializeChosen();
+            if (!this.mutationObserver) this._initializeChosen();
         },
 
         /**
