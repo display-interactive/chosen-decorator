@@ -15,7 +15,7 @@
     ],
     "keywords": ["Polymer", "web-components", "chosen", "html", "select", "selectbox"],
     "dependencies": {
-        "polymer": "Polymer/polymer#^1.1.*",
+        "polymer": "Polymer/polymer#^1.2.*",
         "ugo-jquery-deps": "https://github.com/display-interactive/ugo-jquery-deps.git",
         "iron-ajax": "PolymerElements/iron-ajax",
         "chosen": "latest"
