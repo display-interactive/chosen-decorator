@@ -216,6 +216,7 @@
             if (!this.mutationObserver) this.chosen.chosen('destroy');
             this.chosen[0].innerHTML = htmlOptions;
             if (!this.mutationObserver) this._initializeChosen();
+            this.fire('change', true);
         },
 
         /**
