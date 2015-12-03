@@ -7,6 +7,7 @@
     <template>
         <iron-ajax id="ajaxHandler"
                    url="{{ dependingUrl }}"
+                   auto="{{ auto }}"
                    params="{{ dependingParams }}"
                    handle-as="{{ handleAs }}"
                    on-response="handleAjaxResponse">
@@ -102,6 +103,10 @@
             handleAs: {
                 type: String,
                 value: 'json'
+            },
+            auto: {
+                type: Boolean,
+                value: false
             },
 
             /**
@@ -205,6 +210,13 @@
             }
 
             this.dependingParams = {"value": select.options[select.selectedIndex].value};
+            this.updateOptions();
+        },
+
+        /**
+         * Launch the request
+         */
+        updateOptions: function() {
             this.$.ajaxHandler.generateRequest();
         },
 
