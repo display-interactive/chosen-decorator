@@ -7,7 +7,6 @@
     <template>
         <iron-ajax id="ajaxHandler"
                    url="{{ dependingUrl }}"
-                   auto="{{ auto }}"
                    params="{{ dependingParams }}"
                    handle-as="{{ handleAs }}"
                    on-response="handleAjaxResponse">
@@ -131,6 +130,9 @@
             this._initializeChosen();
             this.async(this._initializeDependency.bind(this), 10);
             this._onMutation();
+            if (this.auto) {
+                this.updateOptions();
+            }
         },
 
         /**
@@ -208,8 +210,9 @@
             if ('CHOSEN-DECORATOR' === select.tagName) {
                 select = this._getSelect(e.target);
             }
-
-            this.dependingParams = {"value": select.options[select.selectedIndex].value};
+            if (select) {
+                this.dependingParams = {"value": select.options[select.selectedIndex].value};
+            }
             this.updateOptions();
         },
 
