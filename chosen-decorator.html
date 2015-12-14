@@ -103,6 +103,10 @@
                 type: String,
                 value: 'json'
             },
+            auto: {
+                type: Boolean,
+                value: false
+            },
 
             /**
              * Event to fire request ajax and change the select options
@@ -126,6 +130,9 @@
             this._initializeChosen();
             this.async(this._initializeDependency.bind(this), 10);
             this._onMutation();
+            if (this.auto) {
+                this.updateOptions();
+            }
         },
 
         /**
@@ -203,8 +210,16 @@
             if ('CHOSEN-DECORATOR' === select.tagName) {
                 select = this._getSelect(e.target);
             }
+            if (select) {
+                this.dependingParams = {"value": select.options[select.selectedIndex].value};
+            }
+            this.updateOptions();
+        },
 
-            this.dependingParams = {"value": select.options[select.selectedIndex].value};
+        /**
+         * Launch the request
+         */
+        updateOptions: function() {
             this.$.ajaxHandler.generateRequest();
         },
 
@@ -225,7 +240,7 @@
         _buildSelectOptions: function(data) {
             var html = '';
             for (var i = 0; i < data.length; i++) {
-                var value = data[i].value,
+                var value = data[i].value != undefined ? data[i].value : data[i],
                     label = data[i].label != undefined ? data[i].label : value;
 
                 html += '<option value="'+value+'">'+label+'</option>';
