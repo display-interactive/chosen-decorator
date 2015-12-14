@@ -129,7 +129,7 @@
 
             this._initializeChosen();
             this.async(this._initializeDependency.bind(this), 10);
-            this._onMutation();
+            this.async(this._onMutation.bind(this), 10);
             if (this.auto) {
                 this.updateOptions();
             }
