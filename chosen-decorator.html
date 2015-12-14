@@ -129,7 +129,7 @@
 
             this._initializeChosen();
             this.async(this._initializeDependency.bind(this), 10);
-            this.async(this._onMutation.bind(this), 10);
+            this.async(this._onMutation.bind(this), 20);
             if (this.auto) {
                 this.updateOptions();
             }
@@ -150,7 +150,9 @@
                     this._initializeChosen();
                 }.bind(this));
 
-                this.mutationObserver.observe(this.chosen[0], {attributes: false, childList: true, characterData: false});
+                if (this.chosen[0]) {
+                    this.mutationObserver.observe(this.chosen[0], {attributes: false, childList: true, characterData: false});
+                }
             }
         },
 
