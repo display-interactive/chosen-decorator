@@ -241,11 +241,13 @@
          */
         _buildSelectOptions: function(data) {
             var html = '';
-            for (var i = 0; i < data.length; i++) {
-                var value = data[i].value != undefined ? data[i].value : data[i],
-                    label = data[i].label != undefined ? data[i].label : value;
+            if (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var value = data[i].value != undefined ? data[i].value : data[i],
+                        label = data[i].label != undefined ? data[i].label : value;
 
-                html += '<option value="'+value+'">'+label+'</option>';
+                    html += '<option value="'+value+'">'+label+'</option>';
+                }
             }
 
             return html;
