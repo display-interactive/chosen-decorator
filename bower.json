@@ -18,7 +18,7 @@
         "polymer": "Polymer/polymer#^1.2.*",
         "ugo-jquery-deps": "https://github.com/display-interactive/ugo-jquery-deps.git",
         "iron-ajax": "git@github.com:PolymerElements/iron-ajax.git#^1.0.*",
-        "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.5.1/chosen_v1.5.1.zip"
+        "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.6.2/chosen_v1.6.2.zip"
     },
     "devDependencies": {
         "web-component-tester": "*"
