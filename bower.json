@@ -5,7 +5,7 @@
         "Florian Roy"
     ],
     "description": "Chosen decorator with polymer",
-    "main": "element/*",
+    "main": "chosen-decorator.html",
     "ignore": [
         "**/.*",
         "node_modules",
