@@ -76,6 +76,12 @@
                 type: Boolean,
                 value: true
             },
+            disabled: {
+                type: Boolean,
+                value: false,
+                notify: true,
+                observer: 'changeDisabled'
+            },
 
             /**
              * a selector to bind the dependency
@@ -128,8 +134,9 @@
             this.chosen = jQuery(select);
 
             this._initializeChosen();
+            this._listenMutation();
             this.async(this._initializeDependency.bind(this), 10);
-            this.async(this._onMutation.bind(this), 20);
+
             if (this.auto) {
                 this.updateOptions();
             }
@@ -143,7 +150,7 @@
             if (this.mutationObserver) this.mutationObserver.disconnect();
         },
 
-        _onMutation: function() {
+        _listenMutation: function() {
             if (typeof window.MutationObserver == 'function') {
                 this.mutationObserver = new MutationObserver(function(mutations) {
                     this.chosen.chosen('destroy');
@@ -189,6 +196,12 @@
             }
         },
 
+        changeDisabled: function(newDisabled, oldDisabled) {
+            if (null !== this.chosen) {
+                this.chosen.prop('disabled', newDisabled).trigger("chosen:updated");
+            }
+        },
+
         /**
          * Reset old registered events
          */
@@ -208,6 +221,7 @@
          * Performs request
          */
         handleDependingEvent: function(e) {
+            this.disabled = true;
             var select = e.target;
             if ('CHOSEN-DECORATOR' === select.tagName) {
                 select = this._getSelect(e.target);
@@ -233,6 +247,7 @@
             if (!this.mutationObserver) this.chosen.chosen('destroy');
             this.chosen[0].innerHTML = htmlOptions;
             if (!this.mutationObserver) this._initializeChosen();
+            this.disabled = false;
             this.fire('change', true);
         },
 
